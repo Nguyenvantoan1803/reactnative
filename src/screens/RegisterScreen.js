@@ -11,6 +11,7 @@ import { theme } from '../core/theme'
 import { emailValidator } from '../helpers/emailValidator'
 import { passwordValidator } from '../helpers/passwordValidator'
 import { nameValidator } from '../helpers/nameValidator'
+import {dangky} from '../ApiCall/index.js'
 
 export default function RegisterScreen({ navigation }) {
   const [name, setName] = useState({ value: '', error: '' })
@@ -27,11 +28,14 @@ export default function RegisterScreen({ navigation }) {
       setPassword({ ...password, error: passwordError })
       return
     }
+    var data = {username: name.value, email: email.value,password:password.value}
+    dangky(data)
     navigation.reset({
       index: 0,
       routes: [{ name: 'Dashboard' }],
     })
   }
+
 
   return (
     <Background>
