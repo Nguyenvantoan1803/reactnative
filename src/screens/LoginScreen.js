@@ -10,6 +10,8 @@ import BackButton from '../components/BackButton'
 import { theme } from '../core/theme'
 import { emailValidator } from '../helpers/emailValidator'
 import { passwordValidator } from '../helpers/passwordValidator'
+import { login } from '../ApiCall/index.js'
+import { Drawertest } from './Drawertest.js'
 
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState({ value: '', error: '' })
@@ -23,10 +25,19 @@ export default function LoginScreen({ navigation }) {
       setPassword({ ...password, error: passwordError })
       return
     }
-    navigation.reset({
-      index: 0,
-      routes: [{ name: 'Dashboard' }],
+    const data = {email:email.value,password:password.value}
+    
+   login(data).then(request=>{
+      if(request.status==200){
+        navigation.reset({
+          index: 0,
+          routes: [{ name: 'Drawertest' }],
+        })
+      }else if(request.status==400) {
+        alert("Đăng nhập không thanh công")
+      };
     })
+    
   }
 
   return (
